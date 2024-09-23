@@ -1,12 +1,15 @@
 package nl.han.se.bewd.mockworkshop.vak;
 
 import nl.han.se.bewd.mockworkshop.student.Student;
+import nl.han.se.bewd.mockworkshop.toets.FakeToets;
 import nl.han.se.bewd.mockworkshop.toets.Toets;
+import nl.han.se.bewd.mockworkshop.toets.summativeToets;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class VakTest {
 
@@ -14,8 +17,10 @@ class VakTest {
     void opdracht4getCijferMetEnkeleToetsGeeftCijferTerug() {
         // Arrange
         Student testStudent = new Student();
-        Toets toets1 = new Toets();
-        toets1.studentMaaktToets(testStudent, 8);
+//        Toets toets1 = new Toets();
+
+        summativeToets toets1 = new summativeToets();
+//        toets1.studentMaaktToets(testStudent, 8);
         Vak vak = new Vak(List.of(toets1));
 
         // Act
@@ -30,10 +35,14 @@ class VakTest {
         // Arrange
         Student testStudent = new Student();
 
-         Toets toets1 = new Toets();
-         toets1.studentMaaktToets(testStudent, 8);
-         Toets toets2 = new Toets();
-         toets2.studentMaaktToets(testStudent, 6);
+        FakeToets toets1 = new FakeToets();
+        toets1.setReturnValueForGetToetsCijferVoorStudent(6);
+        FakeToets toets2 = new FakeToets();
+        toets2.setReturnValueForGetToetsCijferVoorStudent(8);
+//         Toets toets1 = new Toets();
+//         toets1.studentMaaktToets(testStudent, 8);
+//         Toets toets2 = new Toets();
+//         toets2.studentMaaktToets(testStudent, 6);
 
         Vak vak = new Vak(List.of(toets1, toets2));
 
@@ -49,8 +58,9 @@ class VakTest {
         // Arrange
         Student studentNietGemaakt = new Student();
         Student studentWelGemaakt = new Student();
-        Toets toets1 = new Toets();
-        toets1.studentMaaktToets(studentWelGemaakt, 8);
+        Toets toets1 = mock(Toets.class);
+
+        //        Toets toets1 = new Toets();
         Vak vak = new Vak(List.of(toets1));
 
         // Act
